@@ -1,0 +1,125 @@
+<header>
+	<nav class="navbar navbar-expand-lg">
+		<div class="container">
+			<a class="navbar-brand" routerLink="/">
+				<span class="brand-text">SABO</span>MKEYS
+			</a>
+
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							routerLink="/"
+							routerLinkActive="active"
+							[routerLinkActiveOptions]="{ exact: true }"
+							>Home</a
+						>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							routerLink="/category/keyboards"
+							routerLinkActive="active"
+							>Keyboards</a
+						>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							routerLink="/category/switches"
+							routerLinkActive="active"
+							>Switches</a
+						>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							routerLink="/category/keycaps"
+							routerLinkActive="active"
+							>Keycaps</a
+						>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							routerLink="/category/accessories"
+							routerLinkActive="active"
+							>Accessories</a
+						>
+					</li>
+				</ul>
+
+				<div class="d-flex align-items-center">
+					<!-- Cart Button -->
+					<button class="btn btn-cart me-3" routerLink="/cart">
+						<i class="fas fa-shopping-cart"></i>
+						<span class="ms-1">Cart</span>
+						<span
+							class="badge ms-1"
+							*ngIf="(cartItemCount$ | async)! > 0">
+							{{ cartItemCount$ | async }}
+						</span>
+					</button>
+
+					<!-- Auth Buttons -->
+					<div
+						class="auth-buttons"
+						*ngIf="!isLoggedIn$; else userMenu">
+						<button class="btn btn-login me-2" routerLink="/login">
+							Login
+						</button>
+						<button class="btn btn-register" routerLink="/register">
+							Register
+						</button>
+					</div>
+
+					<ng-template #userMenu>
+						<div class="dropdown">
+							<button
+								class="btn btn-user dropdown-toggle"
+								type="button"
+								data-bs-toggle="dropdown">
+								<i class="fas fa-user me-1"></i>
+								{{ currentUser$.email || "User" }}
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li>
+									<a
+										class="dropdown-item"
+										routerLink="/profile"
+										>Profile</a
+									>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										routerLink="/orders"
+										>Orders</a
+									>
+								</li>
+								<li><hr class="dropdown-divider" /></li>
+								<li>
+									<a
+										class="dropdown-item"
+										href="#"
+										(click)="logout($event)"
+										>Logout</a
+									>
+								</li>
+							</ul>
+						</div>
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>

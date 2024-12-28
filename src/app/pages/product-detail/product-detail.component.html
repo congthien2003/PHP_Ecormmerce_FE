@@ -1,0 +1,134 @@
+<div class="product-detail-container">
+	<!-- Breadcrumb -->
+	<div class="breadcrumb-container">
+		<div class="container">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item">
+						<a href="/products">Products</a>
+					</li>
+					<li class="breadcrumb-item active">{{ product.name }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+
+	<!-- Main Product Section -->
+	<div class="container">
+		<div class="product-content">
+			<!-- Product Images Gallery -->
+			<div class="product-gallery">
+				<div class="main-image">
+					<img [src]="selectedImage" [alt]="product.name" />
+				</div>
+				<div class="thumbnail-list">
+					<div
+						*ngFor="let image of product.images"
+						class="thumbnail"
+						[class.active]="selectedImage === image"
+						(click)="selectedImage = image">
+						<img [src]="image" [alt]="product.name" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Product Info -->
+			<div class="product-info">
+				<h1 class="product-title">{{ product.name }}</h1>
+				<div class="product-meta">
+					<span class="sku">SKU: {{ product.sku }}</span>
+					<span class="stock" [class.in-stock]="product.inStock">
+						{{ product.inStock ? "In Stock" : "Out of Stock" }}
+					</span>
+				</div>
+
+				<div class="product-price">
+					<span class="current-price">${{ product.price }}</span>
+					<span class="original-price" *ngIf="product.originalPrice">
+						${{ product.originalPrice }}
+					</span>
+				</div>
+
+				<!-- Product Options -->
+				<div class="product-options">
+					<div
+						class="option-group"
+						*ngFor="let option of product.options">
+						<h3>{{ option.name }}</h3>
+						<div class="option-buttons">
+							<button
+								*ngFor="let value of option.values"
+								class="option-btn"
+								[class.active]="
+									selectedOptions[option.name] === value
+								"
+								(click)="selectOption(option.name, value)">
+								{{ value }}
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Add to Cart Section -->
+				<div class="add-to-cart-section">
+					<div class="quantity-selector">
+						<button class="qty-btn" (click)="decreaseQuantity()">
+							-
+						</button>
+						<input
+							type="number"
+							[value]="quantity"
+							(change)="updateQuantity($event)" />
+						<button class="qty-btn" (click)="increaseQuantity()">
+							+
+						</button>
+					</div>
+					<button
+						class="add-to-cart-btn"
+						[disabled]="!product.inStock"
+						(click)="addToCart()">
+						Add to Cart
+					</button>
+				</div>
+
+				<!-- Product Description -->
+				<div class="product-description">
+					<h2>Description</h2>
+					<div [innerHTML]="product.description"></div>
+				</div>
+
+				<!-- Specifications -->
+				<div class="product-specs">
+					<h2>Specifications</h2>
+					<table class="specs-table">
+						<tr
+							*ngFor="
+								let spec of product.specifications | keyvalue
+							">
+							<td class="spec-name">{{ spec.key }}</td>
+							<td class="spec-value">{{ spec.value }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- Related Products -->
+		<div class="related-products">
+			<h2>Related Products</h2>
+			<div class="products-grid">
+				<div
+					class="product-card"
+					*ngFor="let related of relatedProducts">
+					<img [src]="related.image" [alt]="related.name" />
+					<div class="product-card-content">
+						<h3>{{ related.name }}</h3>
+						<p class="price">${{ related.price }}</p>
+						<button class="view-btn">View Details</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

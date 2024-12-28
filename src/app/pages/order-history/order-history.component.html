@@ -1,0 +1,97 @@
+<div class="order-history-container">
+	<h2>Order History</h2>
+
+	<!-- Loading State -->
+	<div *ngIf="isLoading" class="loading-spinner">Loading orders...</div>
+
+	<!-- Error State -->
+	<div *ngIf="error" class="error-message">
+		{{ error }}
+	</div>
+
+	<!-- Orders List -->
+	<div *ngIf="!isLoading && !error" class="orders-list">
+		<div *ngFor="let order of orders" class="order-card">
+			<div class="order-header">
+				<div class="order-info">
+					<h3>Order #{{ order.id }}</h3>
+					<p class="order-date">
+						{{ order.created_at | date : "medium" }}
+					</p>
+				</div>
+				<span [class]="'status-badge ' + getStatusClass(order.status)">
+					{{ order.status }}
+				</span>
+			</div>
+
+			<div class="order-summary">
+				<p class="total-amount">
+					Total: {{ order.total_amount | currency }}
+				</p>
+				<button
+					(click)="viewOrderDetails(order)"
+					class="view-details-btn">
+					View Details
+				</button>
+			</div>
+		</div>
+
+		<!-- No Orders Message -->
+		<div *ngIf="orders.length === 0" class="no-orders">
+			No orders found.
+		</div>
+	</div>
+
+	<!-- Order Details Modal -->
+	<div *ngIf="selectedOrder" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Order Details #{{ selectedOrder.id }}</h3>
+				<button (click)="closeDetails()" class="close-btn">
+					&times;
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<div class="order-info">
+					<p>
+						Date: {{ selectedOrder.created_at | date : "medium" }}
+					</p>
+					<p>
+						Status:
+						<span [class]="getStatusClass(selectedOrder.status)">
+							{{ selectedOrder.status }}
+						</span>
+					</p>
+				</div>
+
+				<table class="items-table">
+					<thead>
+						<tr>
+							<th>Product</th>
+							<th>Quantity</th>
+							<th>Price</th>
+							<th>Subtotal</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of selectedOrder.items">
+							<td>{{ item.product_name }}</td>
+							<td>{{ item.quantity }}</td>
+							<td>{{ item.price | currency }}</td>
+							<td>{{ item.subtotal | currency }}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3" class="total-label">Total</td>
+							<td class="total-amount">
+								{{ selectedOrder.total_amount | currency }}
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

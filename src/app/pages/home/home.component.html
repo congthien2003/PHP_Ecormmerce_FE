@@ -1,0 +1,92 @@
+<section class="hero-slider">
+	<div id="mainSlider" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div
+				*ngFor="let slide of slides; let i = index"
+				[class]="'carousel-item' + (i === 0 ? ' active' : '')">
+				<img
+					[src]="slide.image"
+					class="d-block w-100"
+					[alt]="slide.title" />
+				<div class="carousel-caption">
+					<h2>{{ slide.title }}</h2>
+					<p>{{ slide.description }}</p>
+				</div>
+			</div>
+		</div>
+		<button
+			class="carousel-control-prev"
+			type="button"
+			data-bs-target="#mainSlider"
+			data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button
+			class="carousel-control-next"
+			type="button"
+			data-bs-target="#mainSlider"
+			data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+</section>
+
+<!-- Best Sellers Section -->
+<section class="best-sellers py-5">
+	<div class="container">
+		<h2 class="section-title mb-4">Best Sellers</h2>
+		<div class="row">
+			<div class="col-md-3" *ngFor="let product of bestSellers">
+				<div class="card product-card">
+					<img
+						[src]="product.imageUrl"
+						class="card-img-top product-image"
+						[alt]="product.name" />
+					<div class="card-body">
+						<h5 class="card-title">{{ product.name }}</h5>
+						<p class="card-text">{{ product.description }}</p>
+						<p class="card-text text-success">
+							{{ product.Price ?? "0" | vnd }}
+						</p>
+						<app-button-cart (click)="addToCart(product)">
+						</app-button-cart>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Products List Section -->
+<section class="products-list py-5">
+	<div class="container">
+		<h2 class="section-title mb-4">Our Products</h2>
+		<div class="row">
+			<div class="col-md-3" *ngFor="let product of products">
+				<div class="card product-card">
+					<img
+						[src]="product.ImageURL"
+						class="card-img-top product-image"
+						[alt]="product.Name" />
+					<div class="card-body">
+						<h5 class="card-title">{{ product.Name }}</h5>
+						<p class="card-text">{{ product.Description }}</p>
+						<p class="card-text text-success">
+							{{ product.Price ?? "0" | vnd }}
+						</p>
+						<app-button-cart (click)="addToCart(product)">
+						</app-button-cart>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="d-flex align-items-center justify-content-center">
+				<app-show-more-btn
+					routerLink="/category/all"></app-show-more-btn>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,397 @@
+.order-history-container {
+	padding: 2rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	background-color: #f8f9fa;
+	min-height: 100vh;
+
+	h2 {
+		margin-bottom: 2rem;
+		color: #2c3e50;
+		font-size: 2rem;
+		font-weight: 600;
+		border-bottom: 2px solid #e9ecef;
+		padding-bottom: 1rem;
+	}
+}
+
+.loading-spinner {
+	text-align: center;
+	padding: 3rem;
+	color: #6c757d;
+	font-size: 1.1rem;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+	color: #dc3545;
+	padding: 1rem;
+	background-color: #fff5f5;
+	border: 1px solid #dc3545;
+	border-radius: 8px;
+	margin-bottom: 1.5rem;
+	font-weight: 500;
+}
+
+.order-card {
+	background: white;
+	border: 1px solid #e9ecef;
+	border-radius: 12px;
+	padding: 1.5rem;
+	margin-bottom: 1.5rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.order-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid #e9ecef;
+	}
+
+	.order-info {
+		h3 {
+			margin: 0;
+			color: #2c3e50;
+			font-size: 1.25rem;
+			font-weight: 600;
+		}
+
+		.order-date {
+			color: #6c757d;
+			font-size: 0.9rem;
+			margin: 0.5rem 0 0;
+		}
+	}
+}
+
+.status-badge {
+	padding: 0.5rem 1.25rem;
+	border-radius: 20px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	text-transform: capitalize;
+	letter-spacing: 0.5px;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.2);
+		transform: skewX(-20deg);
+		transition: all 0.6s ease;
+	}
+
+	&:hover::before {
+		left: 100%;
+	}
+}
+
+.status-completed {
+	background: linear-gradient(135deg, #28a745, #20c997);
+	color: white;
+	box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+	animation: pulse-success 2s infinite;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+	}
+}
+
+.status-pending {
+	background: linear-gradient(135deg, #ffc107, #ffac33);
+	color: #000;
+	box-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+	animation: pulse-pending 1.5s infinite;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+	}
+}
+
+.status-cancelled {
+	background: linear-gradient(135deg, #dc3545, #ff4d5a);
+	color: white;
+	box-shadow: 0 2px 10px rgba(220, 53, 69, 0.3);
+	animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+	}
+}
+
+// Animations
+@keyframes pulse-success {
+	0% {
+		box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+	}
+}
+
+@keyframes pulse-pending {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+	}
+}
+
+@keyframes shake {
+	10%,
+	90% {
+		transform: translate3d(-1px, 0, 0);
+	}
+	20%,
+	80% {
+		transform: translate3d(2px, 0, 0);
+	}
+	30%,
+	50%,
+	70% {
+		transform: translate3d(-2px, 0, 0);
+	}
+	40%,
+	60% {
+		transform: translate3d(2px, 0, 0);
+	}
+}
+
+// Add this for modal status badges
+.modal-body {
+	.status-badge {
+		display: inline-block;
+		margin-left: 0.5rem;
+	}
+}
+
+// Add hover effect for order cards
+.order-card {
+	// ... (keep existing styles) ...
+
+	&:hover {
+		.status-badge {
+			transform: scale(1.05);
+		}
+	}
+}
+
+// Add responsive styles for status badges
+@media (max-width: 768px) {
+	.status-badge {
+		padding: 0.4rem 1rem;
+		font-size: 0.8rem;
+	}
+}
+
+.order-summary {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1rem;
+
+	.total-amount {
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: #2c3e50;
+		margin: 0;
+	}
+
+	.view-details-btn {
+		padding: 0.5rem 1.25rem;
+		background-color: #007bff;
+		color: white;
+		border: none;
+		border-radius: 6px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: #0056b3;
+		}
+	}
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	backdrop-filter: blur(4px);
+
+	.modal-content {
+		background: white;
+		padding: 2rem;
+		border-radius: 12px;
+		max-width: 800px;
+		width: 90%;
+		max-height: 90vh;
+		overflow-y: auto;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+	}
+
+	.modal-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid #e9ecef;
+
+		h3 {
+			margin: 0;
+			color: #2c3e50;
+			font-size: 1.5rem;
+			font-weight: 600;
+		}
+
+		.close-btn {
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			color: #6c757d;
+			cursor: pointer;
+			padding: 0.5rem;
+			border-radius: 50%;
+			transition: background-color 0.2s ease;
+
+			&:hover {
+				background-color: #f8f9fa;
+				color: #dc3545;
+			}
+		}
+	}
+}
+
+.items-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin-top: 1.5rem;
+	background: white;
+	border-radius: 8px;
+	overflow: hidden;
+
+	th,
+	td {
+		padding: 1rem;
+		text-align: left;
+		border-bottom: 1px solid #e9ecef;
+	}
+
+	th {
+		background-color: #f8f9fa;
+		font-weight: 600;
+		color: #2c3e50;
+		text-transform: uppercase;
+		font-size: 0.875rem;
+		letter-spacing: 0.5px;
+	}
+
+	tbody tr {
+		&:hover {
+			background-color: #f8f9fa;
+		}
+
+		td {
+			color: #495057;
+		}
+	}
+
+	tfoot {
+		tr {
+			background-color: #f8f9fa;
+		}
+
+		.total-label {
+			text-align: right;
+			font-weight: 600;
+			color: #2c3e50;
+		}
+
+		.total-amount {
+			font-weight: 600;
+			color: #2c3e50;
+			font-size: 1.1rem;
+		}
+	}
+}
+
+.no-orders {
+	text-align: center;
+	padding: 3rem;
+	background: white;
+	border-radius: 8px;
+	color: #6c757d;
+	font-size: 1.1rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+	.order-history-container {
+		padding: 1rem;
+	}
+
+	.order-card {
+		padding: 1rem;
+
+		.order-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+	}
+
+	.order-summary {
+		flex-direction: column;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+
+	.items-table {
+		th,
+		td {
+			padding: 0.75rem;
+			font-size: 0.9rem;
+		}
+	}
+
+	.modal-content {
+		padding: 1rem;
+		width: 95%;
+	}
+}
