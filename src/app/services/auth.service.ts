@@ -63,4 +63,9 @@ export class AuthService {
 	isLoggedIn(): boolean {
 		return !!this.getToken();
 	}
+
+	isAdmin(): boolean {
+		const user = this.getUserInfo();
+		return user && user.role === 1;
+	}
 }

@@ -1,0 +1,143 @@
+<div class="container order-detail">
+	<h2 class="mb-4 d-flex justify-content-between align-items-center">
+		Order Details
+		<div class="d-flex gap-4">
+			<button class="btn btn-secondary mt-4" (click)="navigateBack()">
+				Back to Orders
+			</button>
+			<button
+				class="btn btn-info mt-4"
+				data-bs-toggle="modal"
+				data-bs-target="#exampleModal">
+				Change Status
+			</button>
+			<div
+				class="modal fade"
+				id="exampleModal"
+				tabindex="-1"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								Change Status Order
+							</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<select
+								name="statys"
+								id="status"
+								(change)="changeStatus($event)"
+								class="form-select">
+								<option value="Pending">Pending</option>
+								<option value="InProgress">InProgress</option>
+								<option value="Completed">Completed</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal">
+								Close
+							</button>
+							<button
+								type="button"
+								class="btn btn-primary"
+								(click)="saveChanges()">
+								Save changes
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h2>
+	<div class="row">
+		<div class="col-6">
+			<div class="card mb-4">
+				<div class="card-header bg-primary text-white">
+					<h5>Order Information</h5>
+				</div>
+				<div class="card-body">
+					<p><strong>Order ID:</strong> {{ order?.Id }}</p>
+					<p><strong>User ID:</strong> {{ order?.user_id }}</p>
+					<p><strong>Status:</strong> {{ order?.status }}</p>
+					<p>
+						<strong>Payment Method:</strong>
+						{{ convertPaymentMethod(order?.payment ?? 0) }}
+					</p>
+					<p>
+						<strong>Order Date:</strong>
+						{{
+							order?.order_date
+								? (order?.order_date | date)
+								: "N/A"
+						}}
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					<h5>Order Summary</h5>
+				</div>
+				<div class="card-body">
+					<p>
+						<strong>Total Items:</strong> {{ order!.items.length }}
+					</p>
+					<p>
+						<strong>Total Amount:</strong>
+						{{ order!.total_amount | currency }}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card mb-4">
+				<div class="card-header bg-primary text-white">
+					<h5>Order Items</h5>
+				</div>
+				<div class="card-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Quantity</th>
+								<th>Price</th>
+								<th>Subtotal</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of order?.items">
+								<td>{{ item.ProductName }}</td>
+								<td>{{ item.Quantity }}</td>
+								<td>{{ item.Price | currency }}</td>
+								<td>
+									{{ item.Quantity * item.Price | currency }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Order Information -->
+
+	<!-- Order Items -->
+
+	<!-- Order Summary -->
+
+	<!-- Back Button -->
+</div>

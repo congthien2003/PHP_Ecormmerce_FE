@@ -14,9 +14,9 @@
 		<div *ngFor="let order of orders" class="order-card">
 			<div class="order-header">
 				<div class="order-info">
-					<h3>Order #{{ order.id }}</h3>
+					<h3>Order #{{ order.Id }}</h3>
 					<p class="order-date">
-						{{ order.created_at | date : "medium" }}
+						{{ order.order_date | date : "medium" }}
 					</p>
 				</div>
 				<span [class]="'status-badge ' + getStatusClass(order.status)">
@@ -46,7 +46,7 @@
 	<div *ngIf="selectedOrder" class="modal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3>Order Details #{{ selectedOrder.id }}</h3>
+				<h3>Order Details #{{ selectedOrder.Id }}</h3>
 				<button (click)="closeDetails()" class="close-btn">
 					&times;
 				</button>
@@ -55,11 +55,15 @@
 			<div class="modal-body">
 				<div class="order-info">
 					<p>
-						Date: {{ selectedOrder.created_at | date : "medium" }}
+						Date: {{ selectedOrder.order_date | date : "medium" }}
 					</p>
-					<p>
+					<p class="d-flex align-items-center">
 						Status:
-						<span [class]="getStatusClass(selectedOrder.status)">
+						<span
+							[class]="
+								'status-badge ' +
+								getStatusClass(selectedOrder.status)
+							">
 							{{ selectedOrder.status }}
 						</span>
 					</p>
@@ -76,10 +80,10 @@
 					</thead>
 					<tbody>
 						<tr *ngFor="let item of selectedOrder.items">
-							<td>{{ item.product_name }}</td>
-							<td>{{ item.quantity }}</td>
-							<td>{{ item.price | currency }}</td>
-							<td>{{ item.subtotal | currency }}</td>
+							<td>{{ item.ProductName }}</td>
+							<td>{{ item.Quantity }}</td>
+							<td>{{ item.Price | currency }}</td>
+							<td>{{ item.Quantity * item.Price | currency }}</td>
 						</tr>
 					</tbody>
 					<tfoot>

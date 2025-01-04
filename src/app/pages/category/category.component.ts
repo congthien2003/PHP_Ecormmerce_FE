@@ -5,11 +5,13 @@ import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { VndPipe } from "../../shared/pipe/vnd.pipe";
 import { ProductService } from "../../services/product.service";
 import { Category } from "../../model/Category";
+import { ButtonCartComponent } from "../../component/button-cart/button-cart.component";
+import { ProductResponse } from "../../model/Product";
 
 @Component({
 	selector: "app-category",
 	standalone: true,
-	imports: [CommonModule, RouterModule, VndPipe],
+	imports: [CommonModule, RouterModule, VndPipe, ButtonCartComponent],
 	templateUrl: "./category.component.html",
 	styleUrl: "./category.component.scss",
 	animations: [
@@ -25,39 +27,18 @@ import { Category } from "../../model/Category";
 	],
 })
 export class CategoryComponent {
-	products: any[] = [
+	products: ProductResponse[] = [
 		{
-			Id: 5,
+			ID: 5,
 			Name: "Transition Lite keyboard kit",
 			Description: "Thương hiệu: Swagkeys",
 			Price: 1350000,
 			ImageURL:
 				"https://bizweb.dktcdn.net/thumb/large/100/484/752/products/transition-lite-3.jpg?v=1727265298660",
+			CategoryName: "Kit",
+			CategoryId: 1,
 		},
-		{
-			id: 6,
-			name: "Bridge75",
-			description: "Thương hiệu: ShortCut Studio",
-			price: 1750000,
-			imageUrl:
-				"https://bizweb.dktcdn.net/thumb/large/100/484/752/products/bridge75-1714967403467.jpg?v=1714967409093",
-		},
-		{
-			id: 7,
-			name: "[Instock] QK65V2 Classic",
-			description: "Thương hiệu: Qwertykeys",
-			price: 3020000,
-			imageUrl:
-				"https://bizweb.dktcdn.net/thumb/large/100/484/752/products/qk65v2-classic.jpg?v=1722508570523",
-		},
-		{
-			id: 8,
-			name: "Neo80 Case",
-			description: "Thương hiệu: Swagkeys",
-			price: 880000,
-			imageUrl:
-				"https://bizweb.dktcdn.net/thumb/large/100/484/752/products/neo80-instock.jpg?v=1714293758973",
-		},
+
 		// Add more products as needed
 	];
 	categoryTitle: string = "";
@@ -65,12 +46,13 @@ export class CategoryComponent {
 	totalPages: number = 1;
 	sortBy: string = "default";
 	currentCategory: string = "all";
+	selectedCategory: number = 0;
 	categories: Category[] = [
-		{ id: "keyboard", name: "Keyboards" },
-		{ id: "kit", name: "DIY Kits" },
-		{ id: "switch", name: "Switches" },
-		{ id: "keycap", name: "Keycaps" },
-		{ id: "accessories", name: "Accessories" },
+		{ id: 0, name: "All" },
+		{ id: 1, name: "Kit" },
+		{ id: 2, name: "Switches" },
+		{ id: 3, name: "Keycaps" },
+		{ id: 4, name: "Accessories" },
 	];
 
 	constructor(
@@ -81,15 +63,21 @@ export class CategoryComponent {
 
 	ngOnInit() {
 		this.route.params.subscribe((params) => {
-			const category = params["category"];
-			this.categoryTitle = this.formatCategoryTitle(category);
-			this.loadProducts(1);
+			this.currentCategory = params["category"];
+			if (this.currentCategory) {
+				this.categories.forEach((c) => {
+					if (c.name.toLowerCase() === this.currentCategory) {
+						this.selectedCategory = c.id;
+					}
+				});
+			}
+			this.loadProducts(this.selectedCategory);
 		});
 	}
 
 	loadProducts(category: number) {
 		this.productService
-			.getProductsByCategory(category, this.currentPage, this.sortBy)
+			.getProducts(category, 12, this.currentPage)
 			.subscribe({
 				next: (response: any) => {
 					this.products = response.data.products;
@@ -114,16 +102,6 @@ export class CategoryComponent {
 
 	addToCart(product: any) {
 		// Implement add to cart functionality
-	}
-
-	private formatCategoryTitle(category: string): string {
-		if (category === "all") return "All Products";
-		const foundCategory = this.categories.find(
-			(cat) => cat.id === category
-		);
-		return foundCategory
-			? foundCategory.name
-			: category.charAt(0).toUpperCase() + category.slice(1);
 	}
 
 	onCategoryChange(event: any) {

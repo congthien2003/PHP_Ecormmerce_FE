@@ -1,0 +1,43 @@
+$primary-color: #ff3333;
+$secondary-color: #1f1f1f;
+$background-color: #f9f9f9;
+$text-color: #333333;
+$border-radius: 6px;
+$box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+#orderSummary {
+	background-color: $background-color;
+	padding: 1.5rem;
+	border-radius: 6px;
+	box-shadow: $box-shadow;
+	margin-top: 2rem;
+
+	.table {
+		width: 100%;
+		margin: 0;
+		color: $text-color;
+
+		th {
+			text-align: left;
+			padding-bottom: 0.5rem;
+			border-bottom: 2px solid #cecece;
+		}
+
+		td {
+			padding: 0.5rem 0;
+		}
+
+		tfoot td {
+			padding-top: 1rem;
+			border-top: 2px solid #cecece;
+		}
+
+		.text-right {
+			text-align: right;
+		}
+
+		.font-weight-bold {
+			font-weight: 700;
+			margin-left: 4px;
+		}
+	}
+}

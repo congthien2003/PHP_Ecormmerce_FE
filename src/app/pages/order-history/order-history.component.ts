@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { OrderService } from "../../services/order.service";
 import { Order } from "../../model/order";
 import { CommonModule } from "@angular/common";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
 	selector: "app-order-history",
@@ -13,20 +14,20 @@ import { CommonModule } from "@angular/common";
 export class OrderHistoryComponent implements OnInit {
 	orders: Order[] = [
 		{
-			id: 1,
+			Id: 1,
 			user_id: 2,
 			total_amount: 100000,
 			status: "pending",
-			created_at: "",
+			order_date: new Date(),
+			payment: 1,
 			items: [
 				{
-					id: 1,
-					order_id: 1,
-					product_id: 2,
-					product_name: "Kit Record Alice",
-					quantity: 1,
-					price: 300000,
-					subtotal: 0,
+					Id: 1,
+					IdOrder: 1,
+					IdProduct: 2,
+					ProductName: "Product 1",
+					Quantity: 1,
+					Price: 300000,
 				},
 			],
 		},
@@ -34,20 +35,24 @@ export class OrderHistoryComponent implements OnInit {
 	isLoading = false;
 	error: string | null = null;
 	selectedOrder: Order | null = null;
-
-	constructor(private orderService: OrderService) {}
+	userInfo: any = {};
+	constructor(
+		private orderService: OrderService,
+		private authService: AuthService
+	) {}
 
 	ngOnInit(): void {
-		// this.loadOrders();
+		this.userInfo = this.authService.getUserInfo();
+		this.loadOrders();
 	}
 
 	loadOrders(): void {
 		this.isLoading = true;
 		this.error = null;
 
-		this.orderService.getUserOrders().subscribe({
-			next: (orders) => {
-				this.orders = orders;
+		this.orderService.getUserOrders(this.userInfo.id).subscribe({
+			next: (res: any) => {
+				this.orders = res.data;
 				this.isLoading = false;
 			},
 			error: (err) => {

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { CartService } from "../../services/cart.service";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 
 @Component({
@@ -17,11 +17,13 @@ export class HeaderComponent {
 	currentUser$ = this.authService.getUserInfo();
 	constructor(
 		private cartService: CartService,
-		private authService: AuthService
+		private authService: AuthService,
+		private router: Router
 	) {}
 
 	logout(event: Event) {
 		event.preventDefault();
 		this.authService.logout();
+		this.router.navigate(["/"]);
 	}
 }

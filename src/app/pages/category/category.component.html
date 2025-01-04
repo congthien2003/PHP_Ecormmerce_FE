@@ -4,7 +4,12 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-				<li class="breadcrumb-item active">{{ categoryTitle }}</li>
+				<li class="breadcrumb-item active">
+					{{
+						this.currentCategory[0].toUpperCase() +
+							this.currentCategory.slice(1)
+					}}
+				</li>
 			</ol>
 		</nav>
 
@@ -39,28 +44,21 @@
 		</div>
 
 		<!-- Products Grid -->
-		<div class="products-grid" *ngIf="products.length > 0; else noProducts">
-			<div class="product-card" *ngFor="let product of products" @fadeIn>
-				<div class="product-image">
-					<img [src]="product.ImageURL" [alt]="product.Name" />
-					<div class="product-actions">
-						<button class="btn-action" (click)="addToCart(product)">
-							<i class="fas fa-shopping-cart"></i>
-						</button>
-						<button
-							class="btn-action"
-							[routerLink]="['/product', product.id]">
-							<i class="fas fa-eye"></i>
-						</button>
-					</div>
-				</div>
-				<div class="product-info">
-					<h3 class="product-name">{{ product.Name }}</h3>
-					<p class="product-price">{{ product.Price | vnd }}</p>
-					<div class="product-meta">
-						<span class="stock" [class.in-stock]="product.inStock">
-							{{ product.inStock ? "In Stock" : "Out of Stock" }}
-						</span>
+		<div class="row" *ngIf="products.length > 0; else noProducts">
+			<div class="col-md-3" *ngFor="let product of products" @fadeIn>
+				<div class="card product-card">
+					<img
+						[src]="product.ImageURL"
+						class="card-img-top product-image"
+						[alt]="product.Name" />
+					<div class="card-body">
+						<h5 class="card-title">{{ product.Name }}</h5>
+						<p class="card-text">{{ product.Description }}</p>
+						<p class="card-text text-success">
+							{{ product.Price ?? "0" | vnd }}
+						</p>
+						<app-button-cart (click)="addToCart(product)">
+						</app-button-cart>
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 @Injectable({
 	providedIn: "root",
 })
@@ -14,8 +14,16 @@ export class ProductService {
 		return this.http.get<any[]>(`${this.apiUrl}/products/bestsellers`);
 	}
 
-	getProducts(): Observable<any[]> {
-		return this.http.get<any[]>(`${this.apiUrl}/products`);
+	getProducts(
+		categoryId: number = 0,
+		limit: number = 12,
+		page: number = 1
+	): Observable<any[]> {
+		const params = new HttpParams()
+			.set("category", categoryId)
+			.set("limit", limit.toString())
+			.set("page", page.toString());
+		return this.http.get<any[]>(`${this.apiUrl}/products`, { params });
 	}
 
 	getProductsByCategory(
@@ -36,5 +44,21 @@ export class ProductService {
 				"Content-Type": "application/json",
 			},
 		});
+	}
+
+	getProductById(productId: number): Observable<any> {
+		return this.http.get(`${this.apiUrl}/products/${productId}`);
+	}
+
+	createProduct(product: any): Observable<any> {
+		return this.http.post(`${this.apiUrl}/products`, product);
+	}
+
+	updateProduct(productId: number, product: any): Observable<any> {
+		return this.http.put(`${this.apiUrl}/products/${productId}`, product);
+	}
+
+	deleteProduct(productId: number): Observable<any> {
+		return this.http.delete(`${this.apiUrl}/products/${productId}`);
 	}
 }

@@ -21,19 +21,6 @@ export class CategoryService {
 		return this.http.get<Category>(`${this.apiUrl}/categories/${id}`);
 	}
 
-	// Get category ID by name
-	getCategoryIdByName(categoryName: string): Observable<string | null> {
-		return this.getCategories().pipe(
-			map((categories) => {
-				const category = categories.find(
-					(cat) =>
-						cat.name.toLowerCase() === categoryName.toLowerCase()
-				);
-				return category ? category.id : null;
-			})
-		);
-	}
-
 	// Create new category
 	createCategory(category: Category): Observable<Category> {
 		return this.http.post<Category>(`${this.apiUrl}/categories`, category);

@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { CartService } from "../../services/cart.service";
 import { VndPipe } from "../../shared/pipe/vnd.pipe";
 import { trigger, transition, style, animate } from "@angular/animations";
-import { RouterModule } from "@angular/router";
+import { Route, Router, RouterModule } from "@angular/router";
 
 @Component({
 	selector: "app-cart",
@@ -40,7 +40,7 @@ export class CartComponent {
 	cartItems: any[] = [];
 	shippingCost: number = 30000; // Example shipping cost
 
-	constructor(private cartService: CartService) {}
+	constructor(private cartService: CartService, private router: Router) {}
 
 	ngOnInit() {
 		this.cartItems = this.cartService.getCartItems();
@@ -72,5 +72,6 @@ export class CartComponent {
 	checkout() {
 		// Implement checkout logic
 		console.log("Proceeding to checkout...");
+		this.router.navigateByUrl("/checkout");
 	}
 }
