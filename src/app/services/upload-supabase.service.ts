@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { SUPABASE_KEY, SUPABASE_URL } from "../../enviroment";
+
 @Injectable({
 	providedIn: "root",
 })
@@ -8,9 +8,10 @@ export class UploadSupabaseService {
 	private supabase: SupabaseClient;
 
 	constructor() {
-		console.log(SUPABASE_KEY);
-		console.log(SUPABASE_URL);
-		this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+		this.supabase = createClient(
+			process.env["SUPABASE_URL"] ?? "",
+			process.env["SUPABASE_KEY"] ?? ""
+		);
 	}
 
 	async uploadFile(file: File) {
