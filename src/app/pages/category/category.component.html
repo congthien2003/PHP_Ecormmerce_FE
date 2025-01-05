@@ -55,7 +55,7 @@
 						<h5 class="card-title">{{ product.Name }}</h5>
 						<p class="card-text">{{ product.Description }}</p>
 						<p class="card-text text-success">
-							{{ product.Price ?? "0" | vnd }}
+							{{ product.Price | vnd }}
 						</p>
 						<app-button-cart (click)="addToCart(product)">
 						</app-button-cart>
