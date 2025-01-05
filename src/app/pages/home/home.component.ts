@@ -120,6 +120,7 @@ export class HomeComponent {
 
 	ngOnInit(): void {
 		// this.loadBestSellers();
+
 		this.loadProducts();
 	}
 

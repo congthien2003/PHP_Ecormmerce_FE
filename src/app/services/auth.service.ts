@@ -31,6 +31,10 @@ export class AuthService {
 		);
 	}
 
+	register(user: any): Observable<any> {
+		return this.http.post(`${this.apiUrl}/auth/register`, user);
+	}
+
 	logout(): void {
 		if (this.storage) {
 			this.storage.clear();

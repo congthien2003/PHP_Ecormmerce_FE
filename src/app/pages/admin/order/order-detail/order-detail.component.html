@@ -67,19 +67,17 @@
 					<h5>Order Information</h5>
 				</div>
 				<div class="card-body">
-					<p><strong>Order ID:</strong> {{ order?.Id }}</p>
-					<p><strong>User ID:</strong> {{ order?.user_id }}</p>
-					<p><strong>Status:</strong> {{ order?.status }}</p>
+					<p><strong>Order ID:</strong> {{ order.Id }}</p>
+					<p><strong>User ID:</strong> {{ order.user_id }}</p>
+					<p><strong>Status:</strong> {{ order.status }}</p>
 					<p>
 						<strong>Payment Method:</strong>
-						{{ convertPaymentMethod(order?.payment ?? 0) }}
+						{{ convertPaymentMethod(order.payment) }}
 					</p>
 					<p>
 						<strong>Order Date:</strong>
 						{{
-							order?.order_date
-								? (order?.order_date | date)
-								: "N/A"
+							order.order_date ? (order.order_date | date) : "N/A"
 						}}
 					</p>
 				</div>
@@ -119,7 +117,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr *ngFor="let item of order?.items">
+							<tr *ngFor="let item of order.items">
 								<td>{{ item.ProductName }}</td>
 								<td>{{ item.Quantity }}</td>
 								<td>{{ item.Price | currency }}</td>

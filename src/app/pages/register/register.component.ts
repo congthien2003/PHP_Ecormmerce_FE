@@ -62,17 +62,17 @@ export class RegisterComponent {
 	}
 
 	onSubmit() {
-		// if (this.registerForm.valid) {
-		// 	this.isLoading = true;
-		// 	this.authService.register(this.registerForm.value).subscribe({
-		// 		next: () => {
-		// 			this.router.navigate(["/login"]);
-		// 		},
-		// 		error: (error) => {
-		// 			console.error("Registration error:", error);
-		// 			this.isLoading = false;
-		// 		},
-		// 	});
-		// }
+		if (this.registerForm.valid) {
+			this.isLoading = true;
+			this.authService.register(this.registerForm.value).subscribe({
+				next: () => {
+					this.router.navigate(["/login"]);
+				},
+				error: (error) => {
+					console.error("Registration error:", error);
+					this.isLoading = false;
+				},
+			});
+		}
 	}
 }
