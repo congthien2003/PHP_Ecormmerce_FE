@@ -56,6 +56,36 @@
 							>Accessories</a
 						>
 					</li>
+					@if (this.isAdmin) {
+					<div class="dropdown">
+						<button
+							class="btn btn-user dropdown-toggle"
+							type="button"
+							data-bs-toggle="dropdown"
+							id="dropdownMenuButton1">
+							<i class="fa fa-bars" aria-hidden="true"></i>
+							Management
+						</button>
+						<ul
+							class="dropdown-menu dropdown-menu-end"
+							aria-labelledby="dropdownMenuButton1">
+							<li>
+								<a
+									class="dropdown-item"
+									routerLink="/admin/order"
+									>Orders</a
+								>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									routerLink="/admin/product"
+									>Product</a
+								>
+							</li>
+						</ul>
+					</div>
+					}
 				</ul>
 
 				<div class="d-flex align-items-center">

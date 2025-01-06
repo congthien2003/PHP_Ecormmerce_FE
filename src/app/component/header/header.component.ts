@@ -16,6 +16,7 @@ export class HeaderComponent {
 	cartItemCount$ = this.cartService.getCartItemCount();
 	isLoggedIn$ = this.authService.isLoggedIn();
 	currentUser$ = this.authService.getUserInfo();
+	isAdmin = this.authService.isAdmin();
 	isLoggedIn = false;
 	private authSubscription!: Subscription;
 	constructor(
@@ -29,6 +30,7 @@ export class HeaderComponent {
 				this.cartItemCount$ = this.cartService.getCartItemCount();
 				this.isLoggedIn$ = this.authService.isLoggedIn();
 				this.currentUser$ = this.authService.getUserInfo();
+				this.isAdmin = this.authService.isAdmin();
 			}
 		);
 	}
