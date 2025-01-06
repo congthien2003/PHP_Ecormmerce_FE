@@ -46,10 +46,10 @@ export class LoginComponent {
 				next: (res) => {
 					sessionStorage.setItem("token", res.token);
 					sessionStorage.setItem("user", JSON.stringify(res.user));
-					window.location.reload();
-					setTimeout(() => {
-						this.router.navigate(["/"]);
-					}, 1000); //
+					this.authService.updateLoginState(true);
+
+					this.router.navigate(["/"]);
+					//
 				},
 				error: (error: Error) => {
 					console.error("Login error:", error);

@@ -65,6 +65,14 @@ export class OrderHistoryComponent implements OnInit {
 
 	viewOrderDetails(order: Order): void {
 		this.selectedOrder = order;
+		this.orderService.getOrderDetailByOrderId(order.Id).subscribe({
+			next: (res: any) => {
+				this.selectedOrder!.items = res.data;
+			},
+			error: (err) => {
+				console.error("Error loading order items:", err);
+			},
+		});
 	}
 
 	closeDetails(): void {

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
@@ -9,7 +9,8 @@ import { isPlatformBrowser } from "@angular/common";
 export class AuthService {
 	private apiUrl = "http://localhost:82/php/s4_php/api";
 	private storage: Storage | null = null;
-
+	private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+	isLoggedIn$ = this.isLoggedInSubject.asObservable();
 	constructor(
 		private http: HttpClient,
 		@Inject(PLATFORM_ID) private platformId: Object
@@ -29,6 +30,10 @@ export class AuthService {
 				}
 			})
 		);
+	}
+
+	updateLoginState(isLoggedIn: boolean) {
+		this.isLoggedInSubject.next(isLoggedIn);
 	}
 
 	register(user: any): Observable<any> {

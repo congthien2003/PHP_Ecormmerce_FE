@@ -35,10 +35,13 @@ export class OrderDetailComponent implements OnInit {
 			.getOrderDetails(this.idOrder)
 			.subscribe((res: any) => {
 				this.order = res.data;
+				console.log(this.order);
 
 				this.orderService
 					.getOrderDetailByOrderId(this.idOrder)
 					.subscribe((res: any) => {
+						console.log(res);
+
 						this.order.items = res.data;
 					});
 			});
